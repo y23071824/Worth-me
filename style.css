@@ -1,0 +1,76 @@
+
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff2f2; /* 粉膚色背景 */
+  color: #333;
+}
+header {
+  background: #fad4d4;
+  color: #4a2c2c;
+  padding: 1em;
+  text-align: center;
+}
+nav {
+  margin-top: 0.5em;
+}
+nav button {
+  margin: 0.3em;
+  background: #fff;
+  border: 1px solid #f4caca;
+  color: #cc6666;
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  cursor: pointer;
+}
+main {
+  padding: 1em;
+  min-height: 100vh;
+}
+.tab {
+  display: none;
+}
+.tab.active {
+  display: block;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(220, 170, 170, 0.2);
+  padding: 1em;
+  margin-bottom: 1.5em;
+}
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 0.5em;
+  margin-top: 1em;
+  border: 1px solid #f2cccc;
+  border-radius: 6px;
+  background: #fff;
+}
+input[type="date"] {
+  padding: 0.5em;
+  margin-top: 1em;
+  border: 1px solid #f2cccc;
+  border-radius: 6px;
+}
+button {
+  margin-top: 1em;
+  background-color: #f4b6b6;
+  border: none;
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.emojis span {
+  font-size: 1.5em;
+  margin-right: 0.5em;
+  cursor: pointer;
+}
+#saved-entries {
+  margin-top: 2em;
+  padding: 1em;
+  background: #ffecec;
+  border-radius: 8px;
+}

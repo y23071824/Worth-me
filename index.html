@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Worth Me 我值得</title>
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>《Worth Me 我值得》</h1>
+    <nav>
+      <button onclick="switchTab('home')">首頁</button>
+      <button onclick="switchTab('diary')">日記</button>
+    </nav>
+  </header>
+  <main>
+    <section id="home" class="tab active">
+      <h2>今日我為自己做了什麼？</h2>
+      <textarea placeholder="輸入你的照顧紀錄..."></textarea>
+      <div class="emojis">情緒貼圖：
+        <span onclick="saveMood('🙂')">🙂</span>
+        <span onclick="saveMood('😐')">😐</span>
+        <span onclick="saveMood('🙁')">🙁</span>
+        <span onclick="saveMood('😍')">😍</span>
+        <span onclick="saveMood('😤')">😤</span>
+        <span onclick="saveMood('😴')">😴</span>
+        <span onclick="saveMood('🥰')">🥰</span>
+        <span onclick="saveMood('😭')">😭</span>
+        <span onclick="saveMood('😎')">😎</span>
+      </div>
+    </section>
+
+    <section id="diary" class="tab">
+      <h2>月曆日記</h2>
+      <input type="date" id="diary-date" />
+      <textarea id="diary-text" placeholder="寫下今天的自我照顧、情緒或心得..."></textarea>
+      <button onclick="saveDiary()">儲存日記</button>
+      <div id="saved-entries"></div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
