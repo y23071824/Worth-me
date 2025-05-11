@@ -1,0 +1,18 @@
+name: worth_me_flutter
+description: A simple self-care calendar app
+publish_to: 'none'
+
+environment:
+  sdk: '>=2.17.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  table_calendar: ^3.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
