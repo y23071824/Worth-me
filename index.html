@@ -2,53 +2,38 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Worth Me 我值得</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <title>Worth Me 每日紀錄</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function getDateParam() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const date = urlParams.get('date');
+            if (date) {
+                document.getElementById('date-title').textContent = date.replace(/-/g, "年").replace(/-(\d+)$/, "月$1日");
+            } else {
+                const today = new Date();
+                const formatted = today.getFullYear() + "年" + (today.getMonth()+1) + "月" + today.getDate() + "日";
+                document.getElementById('date-title').textContent = formatted;
+            }
+        }
+        window.onload = getDateParam;
+    </script>
 </head>
 <body>
-  <header>
-    <h1>Worth Me 我值得</h1>
-  </header>
-
-  <main>
-    <section id="calendar-view">
-      <div id="month-header">
-        <button id="prev-month">←</button>
-        <h2 id="month-label">2025年5月</h2>
-        <button id="next-month">→</button>
-      </div>
-      <div id="calendar-grid"></div>
-    </section>
-
-    <section id="day-detail" class="hidden">
-      <h3 id="selected-date">2025-05-11</h3>
-      <label>今日我為自己做了什麼：</label>
-      <textarea id="daily-reflection"></textarea>
-
-      <label>情緒狀況：</label>
-      <select id="emotion-select">
-        <option value="positive">綠色：積極</option>
-        <option value="neutral">黃色：平穩</option>
-        <option value="negative">紅色：低落</option>
-      </select>
-
-      <label>興趣學習紀錄：</label>
-      <input type="text" id="learning-progress" />
-
-      <label>金錢使用回顧：</label>
-      <input type="text" id="spending-summary" />
-
-      <button id="save-entry">儲存</button>
-      <button id="close-detail">返回月曆</button>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 Worth Me</p>
-  </footer>
-
-  <script src="script.js"></script>
+    <h1 id="date-title"></h1>
+    <p>今天我為自己做了什麼：</p>
+    <textarea></textarea>
+    <p>狀況情緒：
+        <select>
+            <option>綠色：積極</option>
+            <option>黃色：普通</option>
+            <option>紅色：低落</option>
+        </select>
+    </p>
+    <p>興趣學習記錄：<input type="text"></p>
+    <p>資金使用回顧：<input type="text"></p>
+    <button>儲存</button>
+    <a href="calendar.html"><button>返回月曆</button></a>
 </body>
 </html>
