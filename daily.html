@@ -1,72 +1,109 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <title>每日記錄</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>每日記錄</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .container {
+        max-width: 600px;
+        margin: auto;
+        background: #fff;
+        padding: 2em;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    label {
+        display: block;
+        margin-top: 1em;
+        font-weight: bold;
+    }
+    textarea, select, input[type="number"] {
+        width: 100%;
+        padding: 0.8em;
+        margin-top: 0.5em;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+    button {
+        margin-top: 1.5em;
+        padding: 0.8em 1.2em;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        cursor: pointer;
+    }
+    #save-btn {
+        background-color: #ffc0cb;
+        color: white;
+    }
+    #back-btn {
+        background-color: #aaa;
+        color: white;
+        margin-left: 10px;
+    }
+  </style>
 </head>
-<body>
-    <h1 id="date-title">每日記錄</h1>
+<body style="background-color:#fdf7f6;">
+  <div class="container">
+    <h2 id="date-title">每日記錄</h2>
 
-    <label>我為自己做了什麼：
-        <textarea id="self-care-text"></textarea>
-    </label>
+    <label for="self-care-text">我為自己做了什麼：</label>
+    <textarea id="self-care-text" rows="4" placeholder="輸入今天對自己的照顧或付出..."></textarea>
 
-    <label>情緒狀況：
-        <select id="mood-select">
-            <option value="green">綠（正向）</option>
-            <option value="yellow">黃（普通）</option>
-            <option value="red">紅（低落）</option>
-        </select>
-    </label>
+    <label for="mood-select">情緒狀況：</label>
+    <select id="mood-select">
+      <option value="green">綠（正向）</option>
+      <option value="yellow">黃（普通）</option>
+      <option value="red">紅（低落）</option>
+    </select>
 
-    <label>類型標記：
-        <select id="tag-select">
-            <option value="emotion">情緒日記</option>
-            <option value="learning">學習進度</option>
-            <option value="money">金錢照顧</option>
-        </select>
-    </label>
+    <label for="tag-select">類型標記：</label>
+    <select id="tag-select">
+      <option value="emotion">情緒日記</option>
+      <option value="learning">學習進度</option>
+      <option value="money">金錢照顧</option>
+    </select>
 
-    <label>今日金錢照顧自己金額（元）：
-        <input type="number" id="money-spent" />
-    </label>
+    <label for="money-spent">今日金錢照顧自己金額（元）：</label>
+    <input type="number" id="money-spent" min="0" />
 
     <button id="save-btn">儲存</button>
-    <button onclick="window.location.href='index.html'">返回月曆</button>
+    <button id="back-btn" onclick="window.location.href='index.html'">返回月曆</button>
+  </div>
 
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const date = params.get("date");
-        document.getElementById("date-title").textContent = "每日記錄：" + date;
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const date = params.get("date");
+    const key = "daily-" + date;
 
-        const selfCareText = document.getElementById("self-care-text");
-        const moodSelect = document.getElementById("mood-select");
-        const tagSelect = document.getElementById("tag-select");
-        const moneySpent = document.getElementById("money-spent");
+    document.getElementById("date-title").textContent = "每日記錄：" + date;
 
-        const saveBtn = document.getElementById("save-btn");
-        const key = "daily-" + date;
+    const selfCareText = document.getElementById("self-care-text");
+    const moodSelect = document.getElementById("mood-select");
+    const tagSelect = document.getElementById("tag-select");
+    const moneySpent = document.getElementById("money-spent");
 
-        // 載入舊資料
-        const savedData = JSON.parse(localStorage.getItem(key));
-        if (savedData) {
-            selfCareText.value = savedData.text;
-            moodSelect.value = savedData.mood;
-            tagSelect.value = savedData.tag;
-            moneySpent.value = savedData.money;
-        }
+    const savedData = JSON.parse(localStorage.getItem(key));
+    if (savedData) {
+      selfCareText.value = savedData.text || "";
+      moodSelect.value = savedData.mood || "yellow";
+      tagSelect.value = savedData.tag || "emotion";
+      moneySpent.value = savedData.money || "";
+    }
 
-        saveBtn.onclick = () => {
-            const data = {
-                text: selfCareText.value,
-                mood: moodSelect.value,
-                tag: tagSelect.value,
-                money: moneySpent.value
-            };
-            localStorage.setItem(key, JSON.stringify(data));
-            alert("已儲存！");
-        };
-    </script>
+    document.getElementById("save-btn").onclick = () => {
+      const data = {
+        text: selfCareText.value,
+        mood: moodSelect.value,
+        tag: tagSelect.value,
+        money: moneySpent.value
+      };
+      localStorage.setItem(key, JSON.stringify(data));
+      alert("已儲存！");
+    };
+  </script>
 </body>
 </html>
