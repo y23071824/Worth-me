@@ -1,15 +1,47 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>自我照顧月曆</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      max-width: 700px;
+      margin: auto;
+    }
+    .calendar-day {
+      padding: 10px;
+      background-color: #ffeef1;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .calendar-day:hover {
+      background-color: #ffc0cb;
+      color: white;
+    }
+    .calendar-header {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
   <h1>自我照顧月曆</h1>
-  <div id="calendar">
-    <!-- 月曆功能這邊可補充 -->
-    <p>點選某一天查看詳細內容</p>
-  </div>
-</body>
-</html>
+  <div class="calendar-header" id="month-title"></div>
+  <div class="calendar" id="calendar"></div>
+
+  <script>
+    const calendar = document.getElementById("calendar");
+    const monthTitle = document.getElementById("month-title");
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth(); // 0-based
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDayOfWeek = new
