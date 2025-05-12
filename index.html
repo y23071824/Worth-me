@@ -2,50 +2,72 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <title>值得我 我值得</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 20px; }
-        .day { padding: 10px; border: 1px solid #ccc; text-align: center; border-radius: 8px; background-color: white; cursor: pointer; }
-        .day:hover { background-color: #fce4ec; }
-    </style>
+  <meta charset="UTF-8">
+  <title>值得我 我值得</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 20px; }
+    .day {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+      border-radius: 8px;
+      background-color: white;
+      cursor: pointer;
+      position: relative;
+    }
+    .day:hover { background-color: #fce4ec; }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .summary {
+      font-size: 14px;
+      color: #555;
+      margin-top: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
 </head>
 <body>
-    <h1>值得我 我值得</h1>
-    <h2>2025年5月</h2>
-    <div class="calendar">
-        <a class="day" href="daily.html?date=2025-05-01">1</a>
-<a class="day" href="daily.html?date=2025-05-02">2</a>
-<a class="day" href="daily.html?date=2025-05-03">3</a>
-<a class="day" href="daily.html?date=2025-05-04">4</a>
-<a class="day" href="daily.html?date=2025-05-05">5</a>
-<a class="day" href="daily.html?date=2025-05-06">6</a>
-<a class="day" href="daily.html?date=2025-05-07">7</a>
-<a class="day" href="daily.html?date=2025-05-08">8</a>
-<a class="day" href="daily.html?date=2025-05-09">9</a>
-<a class="day" href="daily.html?date=2025-05-10">10</a>
-<a class="day" href="daily.html?date=2025-05-11">11</a>
-<a class="day" href="daily.html?date=2025-05-12">12</a>
-<a class="day" href="daily.html?date=2025-05-13">13</a>
-<a class="day" href="daily.html?date=2025-05-14">14</a>
-<a class="day" href="daily.html?date=2025-05-15">15</a>
-<a class="day" href="daily.html?date=2025-05-16">16</a>
-<a class="day" href="daily.html?date=2025-05-17">17</a>
-<a class="day" href="daily.html?date=2025-05-18">18</a>
-<a class="day" href="daily.html?date=2025-05-19">19</a>
-<a class="day" href="daily.html?date=2025-05-20">20</a>
-<a class="day" href="daily.html?date=2025-05-21">21</a>
-<a class="day" href="daily.html?date=2025-05-22">22</a>
-<a class="day" href="daily.html?date=2025-05-23">23</a>
-<a class="day" href="daily.html?date=2025-05-24">24</a>
-<a class="day" href="daily.html?date=2025-05-25">25</a>
-<a class="day" href="daily.html?date=2025-05-26">26</a>
-<a class="day" href="daily.html?date=2025-05-27">27</a>
-<a class="day" href="daily.html?date=2025-05-28">28</a>
-<a class="day" href="daily.html?date=2025-05-29">29</a>
-<a class="day" href="daily.html?date=2025-05-30">30</a>
-<a class="day" href="daily.html?date=2025-05-31">31</a>
-    </div>
+  <h1>值得我 我值得</h1>
+  <h2>2025年5月</h2>
+  <div class="calendar" id="calendar"></div>
+
+  <script>
+    const calendar = document.getElementById('calendar');
+    for (let d = 1; d <= 31; d++) {
+      const day = d.toString().padStart(2, '0');
+      const key = `2025-05-${day}`;
+      const saved = JSON.parse(localStorage.getItem(key) || '{}');
+      const div = document.createElement('a');
+      div.className = 'day';
+      div.href = `daily.html?date=${key}`;
+      div.innerHTML = day;
+
+      if (saved.emotionColor) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        dot.style.backgroundColor = saved.emotionColor;
+        div.appendChild(dot);
+      }
+
+      if (saved.text) {
+        const summary = document.createElement('div');
+        summary.className = 'summary';
+        summary.textContent = saved.text.slice(0, 20);
+        div.appendChild(summary);
+      }
+
+      calendar.appendChild(div);
+    }
+  </script>
 </body>
 </html>
