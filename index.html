@@ -6,7 +6,8 @@
   <title>值得我 我值得</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 20px; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 10px; }
+    .weekday { font-weight: bold; text-align: center; }
     .day {
       padding: 10px;
       border: 1px solid #ccc;
@@ -15,8 +16,8 @@
       background-color: white;
       cursor: pointer;
       position: relative;
+      min-height: 40px;
     }
-    .day:hover { background-color: #fce4ec; }
     .dot {
       width: 8px;
       height: 8px;
@@ -26,16 +27,9 @@
       left: 50%;
       transform: translateX(-50%);
     }
-    .summary {
-      font-size: 14px;
-      color: #555;
-      margin-top: 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
     .header { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px; }
     select { padding: 6px; border-radius: 6px; }
+    #preview { margin-top: 30px; padding: 10px; background: #fff4f4; border-radius: 10px; }
   </style>
 </head>
 <body>
@@ -44,12 +38,19 @@
     <select id="year"></select>
     <select id="month"></select>
   </div>
-  <div id="calendar" class="calendar"></div>
+  <div class="calendar-grid" id="weekdays">
+    <div class='weekday'>一</div><div class='weekday'>二</div><div class='weekday'>三</div><div class='weekday'>四</div><div class='weekday'>五</div><div class='weekday'>六</div><div class='weekday'>日</div>
+  </div>
+  <div class="calendar-grid" id="calendar"></div>
+
+  <div id="preview"><strong>日記摘要：</strong><span id="previewText">請點選某一天</span></div>
 
   <script>
+    const weekdays = document.getElementById('weekdays');
+    const calendar = document.getElementById('calendar');
     const yearSelect = document.getElementById('year');
     const monthSelect = document.getElementById('month');
-    const calendar = document.getElementById('calendar');
+    const preview = document.getElementById('previewText');
 
     for (let y = 2020; y <= 2030; y++) {
       const option = document.createElement('option');
@@ -68,18 +69,23 @@
     function renderCalendar() {
       const year = parseInt(yearSelect.value);
       const month = parseInt(monthSelect.value);
+      const firstDay = new Date(year, month - 1, 1).getDay();  // 星期天為 0
       const daysInMonth = new Date(year, month, 0).getDate();
       calendar.innerHTML = "";
+
+      let blankStart = (firstDay + 6) % 7; // 轉換為以週一為第一天
+      for (let i = 0; i < blankStart; i++) {
+        calendar.innerHTML += "<div></div>";
+      }
 
       for (let d = 1; d <= daysInMonth; d++) {
         const day = d.toString().padStart(2, '0');
         const monthStr = month.toString().padStart(2, '0');
         const key = `${year}-${monthStr}-${day}`;
         const saved = JSON.parse(localStorage.getItem(key) || '{}');
-        const div = document.createElement('a');
+        const div = document.createElement('div');
         div.className = 'day';
-        div.href = `daily.html?date=${key}`;
-        div.innerHTML = day;
+        div.textContent = day;
 
         if (saved.emotionColor) {
           const dot = document.createElement('div');
@@ -88,13 +94,10 @@
           div.appendChild(dot);
         }
 
-        if (saved.text) {
-          const summary = document.createElement('div');
-          summary.className = 'summary';
-          summary.textContent = saved.text.slice(0, 20);
-          div.appendChild(summary);
-        }
-
+        div.onclick = () => {
+          preview.textContent = saved.text ? saved.text.slice(0, 50) : "當日尚無紀錄";
+        };
+        div.onclick.bind(div);
         calendar.appendChild(div);
       }
     }
