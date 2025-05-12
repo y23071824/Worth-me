@@ -79,7 +79,7 @@
     const date = params.get("date");
     const key = "daily-" + date;
 
-    document.getElementById("date-title").textContent = "每日記錄：" + date;
+    document.getElementById("date-title").textContent = "每日記錄：" + (date || "無日期");
 
     const selfCareText = document.getElementById("self-care-text");
     const moodSelect = document.getElementById("mood-select");
