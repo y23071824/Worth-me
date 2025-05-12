@@ -1,26 +1,13 @@
 
 body {
-  background-color: #fff8f5;
-  color: #333;
-  font-family: "Helvetica", sans-serif;
-  padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #fff;
+    color: #333;
+    padding: 20px;
 }
-h1, h2 {
-  color: #d17b88;
-}
-textarea, input, select {
-  width: 100%;
-  margin: 10px 0;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-button {
-  background-color: #d17b88;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  margin-right: 8px;
-  border-radius: 6px;
-  cursor: pointer;
+input, select, button {
+    display: block;
+    margin: 10px 0;
+    padding: 8px;
+    font-size: 1em;
 }
