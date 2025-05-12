@@ -42,9 +42,9 @@
 
     const today = new Date();
     const year = today.getFullYear();
-    const month = today.getMonth(); // 0-based
+    const month = today.getMonth();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const firstDayOfWeek = new Date(year, month, 1).getDay(); // 0 = Sunday
+    const firstDayOfWeek = new Date(year, month, 1).getDay();
 
     const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
     weekdays.forEach(day => {
