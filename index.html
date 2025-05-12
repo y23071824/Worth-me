@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -78,11 +79,11 @@
     function renderCalendar() {
       const year = parseInt(yearSelect.value);
       const month = parseInt(monthSelect.value);
-      const firstDay = new Date(year, month - 1, 1).getDay();  // 星期天為 0
+      const firstDay = new Date(year, month - 1, 1).getDay();
       const daysInMonth = new Date(year, month, 0).getDate();
       calendar.innerHTML = "";
 
-      let blankStart = (firstDay + 6) % 7; // 轉換為以週一為第一天
+      let blankStart = (firstDay + 6) % 7;
       for (let i = 0; i < blankStart; i++) {
         calendar.innerHTML += "<div></div>";
       }
@@ -128,7 +129,7 @@
       const color = document.getElementById("emotionColor").value;
 
       localStorage.setItem(key, JSON.stringify({ text, emotionColor: color }));
-      renderCalendar();  // 更新月曆畫面
+      renderCalendar();
       alert("今日記錄已儲存！");
     };
   </script>
