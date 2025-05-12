@@ -34,40 +34,78 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    .header { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px; }
+    select { padding: 6px; border-radius: 6px; }
   </style>
 </head>
 <body>
   <h1>值得我 我值得</h1>
-  <h2>2025年5月</h2>
-  <div class="calendar" id="calendar"></div>
+  <div class="header">
+    <select id="year"></select>
+    <select id="month"></select>
+  </div>
+  <div id="calendar" class="calendar"></div>
 
   <script>
+    const yearSelect = document.getElementById('year');
+    const monthSelect = document.getElementById('month');
     const calendar = document.getElementById('calendar');
-    for (let d = 1; d <= 31; d++) {
-      const day = d.toString().padStart(2, '0');
-      const key = `2025-05-${day}`;
-      const saved = JSON.parse(localStorage.getItem(key) || '{}');
-      const div = document.createElement('a');
-      div.className = 'day';
-      div.href = `daily.html?date=${key}`;
-      div.innerHTML = day;
 
-      if (saved.emotionColor) {
-        const dot = document.createElement('div');
-        dot.className = 'dot';
-        dot.style.backgroundColor = saved.emotionColor;
-        div.appendChild(dot);
-      }
-
-      if (saved.text) {
-        const summary = document.createElement('div');
-        summary.className = 'summary';
-        summary.textContent = saved.text.slice(0, 20);
-        div.appendChild(summary);
-      }
-
-      calendar.appendChild(div);
+    for (let y = 2020; y <= 2030; y++) {
+      const option = document.createElement('option');
+      option.value = y;
+      option.textContent = y + " 年";
+      yearSelect.appendChild(option);
     }
+
+    for (let m = 1; m <= 12; m++) {
+      const option = document.createElement('option');
+      option.value = m;
+      option.textContent = m + " 月";
+      monthSelect.appendChild(option);
+    }
+
+    function renderCalendar() {
+      const year = parseInt(yearSelect.value);
+      const month = parseInt(monthSelect.value);
+      const daysInMonth = new Date(year, month, 0).getDate();
+      calendar.innerHTML = "";
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const day = d.toString().padStart(2, '0');
+        const monthStr = month.toString().padStart(2, '0');
+        const key = `${year}-${monthStr}-${day}`;
+        const saved = JSON.parse(localStorage.getItem(key) || '{}');
+        const div = document.createElement('a');
+        div.className = 'day';
+        div.href = `daily.html?date=${key}`;
+        div.innerHTML = day;
+
+        if (saved.emotionColor) {
+          const dot = document.createElement('div');
+          dot.className = 'dot';
+          dot.style.backgroundColor = saved.emotionColor;
+          div.appendChild(dot);
+        }
+
+        if (saved.text) {
+          const summary = document.createElement('div');
+          summary.className = 'summary';
+          summary.textContent = saved.text.slice(0, 20);
+          div.appendChild(summary);
+        }
+
+        calendar.appendChild(div);
+      }
+    }
+
+    yearSelect.onchange = renderCalendar;
+    monthSelect.onchange = renderCalendar;
+
+    const today = new Date();
+    yearSelect.value = today.getFullYear();
+    monthSelect.value = today.getMonth() + 1;
+    renderCalendar();
   </script>
 </body>
 </html>
